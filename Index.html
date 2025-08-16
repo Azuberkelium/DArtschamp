@@ -201,7 +201,7 @@
                             <path data-score="20" class="single-green" transform="rotate(-9, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
                             <path data-score="1" class="single-red" transform="rotate(9, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
                             <path data-score="18" class="single-green" transform="rotate(27, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                            <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,120 L200,120 Z"></path>
                             <path data-score="13" class="single-green" transform="rotate(63, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
                             <path data-score="6" class="single-red" transform="rotate(81, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
                             <path data-score="10" class="single-green" transform="rotate(99, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
@@ -214,7 +214,7 @@
                             <path data-score="16" class="single-red" transform="rotate(225, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,120 L200,120 Z"></path>
                             <path data-score="8" class="single-green" transform="rotate(243, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
                             <path data-score="11" class="single-red" transform="rotate(261, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                            <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,120 L200,120 Z"></path>
                             <path data-score="9" class="single-red" transform="rotate(297, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
                             <path data-score="12" class="single-green" transform="rotate(315, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,120 L200,120 Z"></path>
                             <path data-score="5" class="single-red" transform="rotate(333, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
@@ -298,6 +298,51 @@
         let totalScore = 0;
         let bank = {}; // Object to store purchased items and their counts
 
+        // --- New Achievement System Variables & Data ---
+        const ACHIEVEMENTS = [
+            { id: 'first_single', name: 'First Blood', condition: (stats) => stats.lastSegment === 'single' },
+            { id: 'first_double', name: 'Double Trouble', condition: (stats) => stats.lastSegment === 'double' },
+            { id: 'first_triple', name: 'Triple Threat', condition: (stats) => stats.lastSegment === 'triple' },
+            { id: 'outer_bull_hit', name: 'Bulls-Eye Beginner', condition: (stats) => stats.lastScore === 25 },
+            { id: 'bullseye_hit', name: 'Bulls-Eye Pro', condition: (stats) => stats.lastScore === 50 },
+            { id: 'perfect_score', name: 'The Max Score', condition: (stats) => stats.lastScore === 60 },
+            { id: 'lucky_seven', name: 'Lucky Seven', condition: (stats) => stats.lastScore === 7 || stats.lastScore === 14 || stats.lastScore === 21 },
+            { id: 'bullseye_streak', name: 'Bullseye Master', condition: (stats) => stats.bullseyeCount >= 3 },
+            { id: 'score_100', name: 'Score 100+', condition: (stats) => stats.totalScore >= 100 },
+            { id: 'score_500', name: 'Score 500+', condition: (stats) => stats.totalScore >= 500 },
+            { id: 'score_1000', name: 'Score 1000+', condition: (stats) => stats.totalScore >= 1000 },
+            { id: 'double_12', name: 'Double Dozen', condition: (stats) => stats.lastScore === 24 && stats.lastSegment === 'double' },
+            { id: 'triple_19', name: 'Triple Threat (19s)', condition: (stats) => stats.lastScore === 57 && stats.lastSegment === 'triple' },
+            { id: 'smallest_number', name: 'The Smallest', condition: (stats) => stats.lastScore === 1 },
+            { id: 'largest_number', name: 'The Largest', condition: (stats) => stats.lastScore === 20 || stats.lastScore === 40 || stats.lastScore === 60 },
+            { id: 'odd_streak', name: 'The Oddity', condition: (stats) => stats.consecutiveOddThrows >= 3 },
+            { id: 'even_streak', name: 'Even Keel', condition: (stats) => stats.consecutiveEvenThrows >= 3 },
+            { id: 'all_red', name: 'Red Hot', condition: (stats) => stats.consecutiveRedThrows >= 3 },
+            { id: 'all_green', name: 'Going Green', condition: (stats) => stats.consecutiveGreenThrows >= 3 },
+            { id: 'a_little_bit_of_everything', name: 'Mixed Bag', condition: (stats) => stats.lastSegments.includes('single') && stats.lastSegments.includes('double') && stats.lastSegments.includes('triple') },
+            { id: '10_triples', name: 'Darts Master', condition: (stats) => stats.totalTriples >= 10 },
+            { id: '10_doubles', name: 'Darts Legend', condition: (stats) => stats.totalDoubles >= 10 },
+            { id: 'money_spender', name: 'The Bankrupt', condition: (stats) => stats.totalPurchases >= 5 },
+            { id: 'item_collector', name: 'The Collector', condition: (stats) => Object.keys(bank).length >= 3 },
+            { id: 'score_2000', name: 'The Grand Champion', condition: (stats) => stats.totalScore >= 2000 }
+        ];
+
+        const unlockedAchievements = new Set();
+        let gameStats = {
+            totalScore: 0,
+            lastScore: 0,
+            lastSegment: '',
+            bullseyeCount: 0,
+            totalTriples: 0,
+            totalDoubles: 0,
+            consecutiveOddThrows: 0,
+            consecutiveEvenThrows: 0,
+            consecutiveRedThrows: 0,
+            consecutiveGreenThrows: 0,
+            lastSegments: []
+        };
+        // --- End of New Achievement System Variables & Data ---
+
         // Items available in the shop
         const shopItems = [
             { id: 'place-dart', name: 'Place Dart' },
@@ -321,6 +366,8 @@
         // Function to update the total score display
         function updateScoreDisplay() {
             totalScoreEl.textContent = totalScore;
+            gameStats.totalScore = totalScore; // Keep gameStats in sync
+            checkAchievements(); // Check for achievements on every score update
         }
 
         // Function to render the bank items
@@ -364,21 +411,81 @@
             if (totalScore >= cost) {
                 totalScore -= cost;
                 bank[itemId] = (bank[itemId] || 0) + 1;
+                gameStats.totalPurchases = (gameStats.totalPurchases || 0) + 1;
                 updateScoreDisplay();
                 renderBank();
                 showMessage(`You purchased "${shopItems.find(i => i.id === itemId).name}" for 100 score points!`);
+                checkAchievements(); // Check for achievements after a purchase
             } else {
                 showMessage('Not enough score to purchase this item!');
             }
         }
+
+        // --- New Achievement System Logic ---
+        function checkAchievements() {
+            ACHIEVEMENTS.forEach(achievement => {
+                // If the achievement is not yet unlocked and its condition is met
+                if (!unlockedAchievements.has(achievement.id) && achievement.condition(gameStats)) {
+                    unlockedAchievements.add(achievement.id);
+                    totalScore += 50;
+                    updateScoreDisplay();
+                    showMessage(`Achievement Unlocked: "${achievement.name}"! You received 50 bonus points!`);
+                }
+            });
+        }
+        // --- End of New Achievement System Logic ---
 
         // Event listener for dartboard clicks
         dartboardEl.addEventListener('click', (event) => {
             const path = event.target.closest('path, circle');
             if (path) {
                 const score = parseInt(path.getAttribute('data-score'), 10);
+                const color = path.classList.contains('single-red') || path.classList.contains('double-ring red') || path.classList.contains('triple-ring red') || path.classList.contains('bullseye') ? 'red' : 'green';
+                let segmentType = 'single';
+                if (path.classList.contains('double-ring')) {
+                    segmentType = 'double';
+                } else if (path.classList.contains('triple-ring')) {
+                    segmentType = 'triple';
+                } else if (path.classList.contains('outer-bull')) {
+                    segmentType = 'outer_bull';
+                } else if (path.classList.contains('bullseye')) {
+                    segmentType = 'bullseye';
+                }
+
                 if (!isNaN(score)) {
                     totalScore += score;
+
+                    // Update game stats
+                    gameStats.lastScore = score;
+                    gameStats.lastSegment = segmentType;
+
+                    // Update consecutive streaks for achievements
+                    const isOdd = score % 2 !== 0;
+                    const isEven = score % 2 === 0;
+                    const isRed = color === 'red';
+                    const isGreen = color === 'green';
+                    
+                    gameStats.consecutiveOddThrows = isOdd ? gameStats.consecutiveOddThrows + 1 : 0;
+                    gameStats.consecutiveEvenThrows = isEven ? gameStats.consecutiveEvenThrows + 1 : 0;
+                    gameStats.consecutiveRedThrows = isRed ? gameStats.consecutiveRedThrows + 1 : 0;
+                    gameStats.consecutiveGreenThrows = isGreen ? gameStats.consecutiveGreenThrows + 1 : 0;
+                    
+                    if (segmentType === 'bullseye') {
+                        gameStats.bullseyeCount++;
+                    }
+                    if (segmentType === 'triple') {
+                        gameStats.totalTriples++;
+                    }
+                    if (segmentType === 'double') {
+                        gameStats.totalDoubles++;
+                    }
+
+                    // Manage last 3 segments for achievement
+                    gameStats.lastSegments.push(segmentType);
+                    if (gameStats.lastSegments.length > 3) {
+                        gameStats.lastSegments.shift();
+                    }
+
                     updateScoreDisplay();
                 }
             }
@@ -413,4 +520,3 @@
     </script>
 </body>
 </html>
-
