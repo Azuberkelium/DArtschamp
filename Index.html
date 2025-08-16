@@ -11,6 +11,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #0d1117;
             color: #c9d1d9;
+            padding: 1rem;
         }
 
         .container {
@@ -75,188 +76,203 @@
             z-index: 100;
             display: none;
         }
+        
+        /* Responsive layout for tablets and desktops */
+        @media (min-width: 768px) {
+            .main-content {
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: flex-start;
+            }
+        }
     </style>
 </head>
-<body class="p-8">
+<body class="p-4 md:p-8">
 
     <div class="container mx-auto p-4 bg-[#161b22] rounded-3xl shadow-lg border border-gray-700">
         <h1 class="text-3xl font-bold text-center mb-6">Darts Nighttime Champion</h1>
         
-        <!-- Score and Dartboard Section -->
-        <div class="flex flex-col items-center mb-8">
-            <div class="text-2xl font-bold mb-4">
-                Score: <span id="total-score" class="text-green-400">0</span>
+        <!-- Main content area for flexible layout -->
+        <div class="main-content flex flex-col md:flex-row gap-8">
+            <!-- Score and Dartboard Section -->
+            <div class="flex flex-col items-center mb-8 md:mb-0 w-full md:w-1/2">
+                <div class="text-2xl font-bold mb-4">
+                    Score: <span id="total-score" class="text-green-400">0</span>
+                </div>
+
+                <!-- Dartboard SVG with Numbers -->
+                <div class="dartboard-wrapper">
+                    <svg id="dartboard" class="dartboard" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Dartboard segments from previous version -->
+                        <!-- Outer Single Segments -->
+                        <g id="outer-segments">
+                            <path data-score="20" class="single-green" transform="rotate(-9, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="1" class="single-red" transform="rotate(9, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="18" class="single-green" transform="rotate(27, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="13" class="single-green" transform="rotate(63, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="6" class="single-red" transform="rotate(81, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="10" class="single-green" transform="rotate(99, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="15" class="single-red" transform="rotate(117, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="2" class="single-green" transform="rotate(135, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="17" class="single-red" transform="rotate(153, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="3" class="single-green" transform="rotate(171, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="19" class="single-red" transform="rotate(189, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="7" class="single-green" transform="rotate(207, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="16" class="single-red" transform="rotate(225, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="8" class="single-green" transform="rotate(243, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="11" class="single-red" transform="rotate(261, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="9" class="single-red" transform="rotate(297, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="12" class="single-green" transform="rotate(315, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                            <path data-score="5" class="single-red" transform="rotate(333, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        </g>
+                        <!-- Double Ring Segments -->
+                        <g id="double-rings">
+                            <path data-score="40" class="double-ring green" transform="rotate(-9, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="2" class="double-ring red" transform="rotate(9, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="36" class="double-ring green" transform="rotate(27, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="8" class="double-ring red" transform="rotate(45, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="26" class="double-ring green" transform="rotate(63, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="12" class="double-ring red" transform="rotate(81, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="20" class="double-ring green" transform="rotate(99, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="30" class="double-ring red" transform="rotate(117, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="4" class="double-ring green" transform="rotate(135, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="34" class="double-ring red" transform="rotate(153, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="6" class="double-ring green" transform="rotate(171, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="38" class="double-ring red" transform="rotate(189, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="14" class="double-ring green" transform="rotate(207, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="32" class="double-ring red" transform="rotate(225, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="16" class="double-ring green" transform="rotate(243, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="22" class="double-ring red" transform="rotate(261, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="28" class="double-ring green" transform="rotate(279, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="18" class="double-ring red" transform="rotate(297, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="24" class="double-ring green" transform="rotate(315, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                            <path data-score="10" class="double-ring red" transform="rotate(333, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        </g>
+                        <!-- Single Outer Segments -->
+                        <g id="single-outer-segments">
+                            <path data-score="20" class="single-green" transform="rotate(-9, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="1" class="single-red" transform="rotate(9, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="18" class="single-green" transform="rotate(27, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="13" class="single-green" transform="rotate(63, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="6" class="single-red" transform="rotate(81, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="10" class="single-green" transform="rotate(99, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="15" class="single-red" transform="rotate(117, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="2" class="single-green" transform="rotate(135, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="17" class="single-red" transform="rotate(153, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="3" class="single-green" transform="rotate(171, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="19" class="single-red" transform="rotate(189, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="7" class="single-green" transform="rotate(207, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="16" class="single-red" transform="rotate(225, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="8" class="single-green" transform="rotate(243, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="11" class="single-red" transform="rotate(261, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="9" class="single-red" transform="rotate(297, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="12" class="single-green" transform="rotate(315, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                            <path data-score="5" class="single-red" transform="rotate(333, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        </g>
+                        <!-- Triple Rings -->
+                        <g id="triple-rings">
+                            <path data-score="60" class="triple-ring red" transform="rotate(-9, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="3" class="triple-ring green" transform="rotate(9, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="54" class="triple-ring red" transform="rotate(27, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="12" class="triple-ring green" transform="rotate(45, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="39" class="triple-ring red" transform="rotate(63, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="18" class="triple-ring green" transform="rotate(81, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="30" class="triple-ring red" transform="rotate(99, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="45" class="triple-ring green" transform="rotate(117, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="6" class="triple-ring red" transform="rotate(135, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="57" class="triple-ring green" transform="rotate(153, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="9" class="triple-ring red" transform="rotate(171, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="42" class="triple-ring green" transform="rotate(189, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="33" class="triple-ring red" transform="rotate(207, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="24" class="triple-ring green" transform="rotate(225, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="15" class="triple-ring red" transform="rotate(243, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="10" class="triple-ring green" transform="rotate(261, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="35" class="triple-ring red" transform="rotate(279, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="27" class="triple-ring green" transform="rotate(297, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="36" class="triple-ring red" transform="rotate(315, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                            <path data-score="20" class="triple-ring green" transform="rotate(333, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        </g>
+                        <!-- Inner Single Segments -->
+                        <g id="single-inner-segments">
+                            <path data-score="20" class="single-green" transform="rotate(-9, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="1" class="single-red" transform="rotate(9, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="18" class="single-green" transform="rotate(27, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="13" class="single-green" transform="rotate(63, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="6" class="single-red" transform="rotate(81, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="10" class="single-green" transform="rotate(99, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="15" class="single-red" transform="rotate(117, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="2" class="single-green" transform="rotate(135, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="17" class="single-red" transform="rotate(153, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="3" class="single-green" transform="rotate(171, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="19" class="single-red" transform="rotate(189, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="7" class="single-green" transform="rotate(207, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="16" class="single-red" transform="rotate(225, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,120 L200,120 Z"></path>
+                            <path data-score="8" class="single-green" transform="rotate(243, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="11" class="single-red" transform="rotate(261, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="9" class="single-red" transform="rotate(297, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                            <path data-score="12" class="single-green" transform="rotate(315, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,120 L200,120 Z"></path>
+                            <path data-score="5" class="single-red" transform="rotate(333, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
+                        </g>
+                        <!-- Bullseyes, now with a larger radius to be double the size -->
+                        <circle data-score="25" class="outer-bull" cx="200" cy="200" r="20"></circle>
+                        <circle data-score="50" class="bullseye" cx="200" cy="200" r="10"></circle>
+
+                        <!-- The numbers section with corrected rotations -->
+                        <g id="number-ring">
+                            <!-- Numbers are positioned based on radius and angle -->
+                            <text x="200" y="25" class="number-text" transform="rotate(-9, 200, 200)">20</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(9, 200, 200)">1</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(27, 200, 200)">18</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(45, 200, 200)">4</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(63, 200, 200)">13</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(81, 200, 200)">6</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(99, 200, 200)">10</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(117, 200, 200)">15</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(135, 200, 200)">2</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(153, 200, 200)">17</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(171, 200, 200)">3</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(189, 200, 200)">19</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(207, 200, 200)">7</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(225, 200, 200)">16</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(243, 200, 200)">8</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(261, 200, 200)">11</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(279, 200, 200)">14</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(297, 200, 200)">9</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(315, 200, 200)">12</text>
+                            <text x="200" y="25" class="number-text" transform="rotate(333, 200, 200)">5</text>
+                        </g>
+                    </svg>
+                </div>
             </div>
 
-            <!-- Dartboard SVG with Numbers -->
-            <div class="dartboard-wrapper">
-                <svg id="dartboard" class="dartboard" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Dartboard segments from previous version -->
-                    <!-- Outer Single Segments -->
-                    <g id="outer-segments">
-                        <path data-score="20" class="single-green" transform="rotate(-9, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="1" class="single-red" transform="rotate(9, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="18" class="single-green" transform="rotate(27, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="13" class="single-green" transform="rotate(63, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="6" class="single-red" transform="rotate(81, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="10" class="single-green" transform="rotate(99, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="15" class="single-red" transform="rotate(117, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="2" class="single-green" transform="rotate(135, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="17" class="single-red" transform="rotate(153, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="3" class="single-green" transform="rotate(171, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="19" class="single-red" transform="rotate(189, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="7" class="single-green" transform="rotate(207, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="16" class="single-red" transform="rotate(225, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="8" class="single-green" transform="rotate(243, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="11" class="single-red" transform="rotate(261, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="9" class="single-red" transform="rotate(297, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="12" class="single-green" transform="rotate(315, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path data-score="5" class="single-red" transform="rotate(333, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                    </g>
-                    <!-- Double Ring Segments -->
-                    <g id="double-rings">
-                        <path data-score="40" class="double-ring green" transform="rotate(-9, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="2" class="double-ring red" transform="rotate(9, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="36" class="double-ring green" transform="rotate(27, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="8" class="double-ring red" transform="rotate(45, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="26" class="double-ring green" transform="rotate(63, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="12" class="double-ring red" transform="rotate(81, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="20" class="double-ring green" transform="rotate(99, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="30" class="double-ring red" transform="rotate(117, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="4" class="double-ring green" transform="rotate(135, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="34" class="double-ring red" transform="rotate(153, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="6" class="double-ring green" transform="rotate(171, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="38" class="double-ring red" transform="rotate(189, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="14" class="double-ring green" transform="rotate(207, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="32" class="double-ring red" transform="rotate(225, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="16" class="double-ring green" transform="rotate(243, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="22" class="double-ring red" transform="rotate(261, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="28" class="double-ring green" transform="rotate(279, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="18" class="double-ring red" transform="rotate(297, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="24" class="double-ring green" transform="rotate(315, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path data-score="10" class="double-ring red" transform="rotate(333, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                    </g>
-                    <!-- Single Outer Segments -->
-                    <g id="single-outer-segments">
-                        <path data-score="20" class="single-green" transform="rotate(-9, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="1" class="single-red" transform="rotate(9, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="18" class="single-green" transform="rotate(27, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="13" class="single-green" transform="rotate(63, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="6" class="single-red" transform="rotate(81, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="10" class="single-green" transform="rotate(99, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="15" class="single-red" transform="rotate(117, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="2" class="single-green" transform="rotate(135, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="17" class="single-red" transform="rotate(153, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="3" class="single-green" transform="rotate(171, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="19" class="single-red" transform="rotate(189, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="7" class="single-green" transform="rotate(207, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="16" class="single-red" transform="rotate(225, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="8" class="single-green" transform="rotate(243, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="11" class="single-red" transform="rotate(261, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="9" class="single-red" transform="rotate(297, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="12" class="single-green" transform="rotate(315, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path data-score="5" class="single-red" transform="rotate(333, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                    </g>
-                    <!-- Triple Rings -->
-                    <g id="triple-rings">
-                        <path data-score="60" class="triple-ring red" transform="rotate(-9, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="3" class="triple-ring green" transform="rotate(9, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="54" class="triple-ring red" transform="rotate(27, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="12" class="triple-ring green" transform="rotate(45, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="39" class="triple-ring red" transform="rotate(63, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="18" class="triple-ring green" transform="rotate(81, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="30" class="triple-ring red" transform="rotate(99, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="45" class="triple-ring green" transform="rotate(117, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="6" class="triple-ring red" transform="rotate(135, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="57" class="triple-ring green" transform="rotate(153, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="9" class="triple-ring red" transform="rotate(171, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="42" class="triple-ring green" transform="rotate(189, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="33" class="triple-ring red" transform="rotate(207, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="24" class="triple-ring green" transform="rotate(225, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="15" class="triple-ring red" transform="rotate(243, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="10" class="triple-ring green" transform="rotate(261, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="35" class="triple-ring red" transform="rotate(279, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="27" class="triple-ring green" transform="rotate(297, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="36" class="triple-ring red" transform="rotate(315, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path data-score="20" class="triple-ring green" transform="rotate(333, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                    </g>
-                    <!-- Inner Single Segments -->
-                    <g id="single-inner-segments">
-                        <path data-score="20" class="single-green" transform="rotate(-9, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="1" class="single-red" transform="rotate(9, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="18" class="single-green" transform="rotate(27, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="13" class="single-green" transform="rotate(63, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="6" class="single-red" transform="rotate(81, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="10" class="single-green" transform="rotate(99, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="15" class="single-red" transform="rotate(117, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="2" class="single-green" transform="rotate(135, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="17" class="single-red" transform="rotate(153, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="3" class="single-green" transform="rotate(171, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="19" class="single-red" transform="rotate(189, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="7" class="single-green" transform="rotate(207, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="16" class="single-red" transform="rotate(225, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="8" class="single-green" transform="rotate(243, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="11" class="single-red" transform="rotate(261, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="9" class="single-red" transform="rotate(297, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="12" class="single-green" transform="rotate(315, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                        <path data-score="5" class="single-red" transform="rotate(333, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,170.2 A30 30 0 0 0 200,170 L200,120 Z"></path>
-                    </g>
-                    <!-- Bullseyes, now with a larger radius to be double the size -->
-                    <circle data-score="25" class="outer-bull" cx="200" cy="200" r="20"></circle>
-                    <circle data-score="50" class="bullseye" cx="200" cy="200" r="10"></circle>
+            <!-- Shop and Bank Section -->
+            <div class="w-full md:w-1/2">
+                <div class="h-px w-full bg-gray-700 my-8 md:hidden"></div>
 
-                    <!-- The numbers section with corrected rotations -->
-                    <g id="number-ring">
-                        <!-- Numbers are positioned based on radius and angle -->
-                        <text x="200" y="25" class="number-text" transform="rotate(-9, 200, 200)">20</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(9, 200, 200)">1</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(27, 200, 200)">18</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(45, 200, 200)">4</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(63, 200, 200)">13</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(81, 200, 200)">6</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(99, 200, 200)">10</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(117, 200, 200)">15</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(135, 200, 200)">2</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(153, 200, 200)">17</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(171, 200, 200)">3</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(189, 200, 200)">19</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(207, 200, 200)">7</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(225, 200, 200)">16</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(243, 200, 200)">8</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(261, 200, 200)">11</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(279, 200, 200)">14</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(297, 200, 200)">9</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(315, 200, 200)">12</text>
-                        <text x="200" y="25" class="number-text" transform="rotate(333, 200, 200)">5</text>
-                    </g>
-                </svg>
-            </div>
-        </div>
+                <!-- Shop Section -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-bold mb-4 text-center">Shop <span class="text-yellow-400">(Cost: 100 per item)</span></h2>
+                    <div id="shop-items" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Shop items will be rendered here -->
+                    </div>
+                </div>
 
-        <div class="h-px w-full bg-gray-700 my-8"></div>
+                <div class="h-px w-full bg-gray-700 my-8"></div>
 
-        <!-- Shop Section -->
-        <div class="mb-8">
-            <h2 class="text-xl font-bold mb-4 text-center">Shop <span class="text-yellow-400">(Cost: 100 per item)</span></h2>
-            <div id="shop-items" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                <!-- Shop items will be rendered here -->
-            </div>
-        </div>
-
-        <div class="h-px w-full bg-gray-700 my-8"></div>
-
-        <!-- Bank Section -->
-        <div class="mb-4">
-            <h2 class="text-xl font-bold mb-4 text-center">Your Bank <span class="text-blue-400">(Click to use)</span></h2>
-            <div id="bank-items" class="flex flex-wrap gap-2 justify-center">
-                <!-- Bank items will be rendered here -->
-                <p id="bank-placeholder" class="text-gray-500">Your bank is empty. Purchase some items!</p>
+                <!-- Bank Section -->
+                <div class="mb-4">
+                    <h2 class="text-xl font-bold mb-4 text-center">Your Bank <span class="text-blue-400">(Click to use)</span></h2>
+                    <div id="bank-items" class="flex flex-wrap gap-2 justify-center">
+                        <!-- Bank items will be rendered here -->
+                        <p id="bank-placeholder" class="text-gray-500">Your bank is empty. Purchase some items!</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -320,7 +336,7 @@
                     const item = shopItems.find(i => i.id === itemId);
                     const itemEl = document.createElement('div');
                     itemEl.id = `bank-item-${itemId}`;
-                    itemEl.className = 'bank-item bg-gray-700 hover:bg-gray-600 rounded-xl p-3 text-center transition';
+                    itemEl.className = 'bank-item bg-gray-700 hover:bg-gray-600 rounded-xl p-3 text-center transition cursor-pointer';
                     itemEl.innerHTML = `
                         <div class="font-bold">${item.name}</div>
                         <div class="text-sm text-gray-400">x${bank[itemId]}</div>
@@ -376,7 +392,7 @@
             shopItems.forEach(item => {
                 const itemEl = document.createElement('div');
                 itemEl.id = `shop-item-${item.id}`;
-                itemEl.className = 'shop-item-card bg-gray-800 rounded-xl p-4 flex flex-col items-center justify-center border border-gray-700 shadow-md';
+                itemEl.className = 'shop-item-card bg-gray-800 rounded-xl p-4 flex flex-col items-center justify-center border border-gray-700 shadow-md cursor-pointer';
                 itemEl.innerHTML = `
                     <div class="text-center font-bold mb-1">${item.name}</div>
                     <div class="text-xs text-gray-400">Cost: 100</div>
