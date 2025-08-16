@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darts Nighttime Champion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
+        .dartboard-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 500px; /* Limits the max size of the board */
+            margin: 0 auto; /* Centers the board */
+            padding-top: 100%; /* Creates a square container */
+        }
+
+        .dartboard {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .dartboard path, .dartboard circle {
+            stroke: #161b22;
+            stroke-width: 0.5;
+            transition: fill 0.2s ease;
+            cursor: pointer;
+        }
+
+        .dartboard path:hover, .dartboard circle:hover {
+            opacity: 0.8;
+        }
+
+        /* Styling for different segments */
+        .single-in, .single-out { fill: #2d3844; }
+        .single-red { fill: #a52a2a; }
+        .single-green { fill: #006400; }
+        .double-ring, .triple-ring { fill: #161b22; }
+        .double-ring.red { fill: #a52a2a; }
+        .double-ring.green { fill: #006400; }
+        .triple-ring.red { fill: #a52a2a; }
+        .triple-ring.green { fill: #006400; }
+        .outer-bull { fill: #006400; }
+        .bullseye { fill: #a52a2a; }
+
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #161b22;
+            border: 1px solid #c9d1d9;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            z-index: 100;
+            display: none;
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <div class="container mx-auto p-4 bg-[#161b22] rounded-3xl shadow-lg border border-gray-700">
+        <h1 class="text-3xl font-bold text-center mb-6">Darts Nighttime Champion</h1>
+        
+        <!-- Score and Dartboard Section -->
+        <div class="flex flex-col items-center mb-8">
+            <div class="text-2xl font-bold mb-4">
+                Score: <span id="total-score" class="text-green-400">0</span>
+            </div>
+
+            <!-- Dartboard SVG - Updated for no overlap -->
+            <div class="dartboard-wrapper">
+                <svg id="dartboard" class="dartboard" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Numbers will not be drawn for simplicity, just the clickable paths -->
+                    <defs>
+                        <!-- Define the paths for a single segment (e.g., the 20) to reuse with transforms -->
+                        <path id="single-outer" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path id="double-ring-path" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path id="single-inner" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path id="triple-ring-path" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path id="single-triple-in" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                    </defs>
+
+                    <!-- Segments, dynamically colored and rotated -->
+                    <!-- Outer Single Segments -->
+                    <g id="outer-segments">
+                        <!-- Score: 20 --> <path data-score="20" class="single-green" transform="rotate(9, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 1 --> <path data-score="1" class="single-red" transform="rotate(27, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 18 --> <path data-score="18" class="single-green" transform="rotate(45, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 4 --> <path data-score="4" class="single-red" transform="rotate(63, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 13 --> <path data-score="13" class="single-green" transform="rotate(81, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 6 --> <path data-score="6" class="single-red" transform="rotate(99, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 10 --> <path data-score="10" class="single-green" transform="rotate(117, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 15 --> <path data-score="15" class="single-red" transform="rotate(135, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 2 --> <path data-score="2" class="single-green" transform="rotate(153, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 17 --> <path data-score="17" class="single-red" transform="rotate(171, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 3 --> <path data-score="3" class="single-green" transform="rotate(189, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 19 --> <path data-score="19" class="single-red" transform="rotate(207, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 7 --> <path data-score="7" class="single-green" transform="rotate(225, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 16 --> <path data-score="16" class="single-red" transform="rotate(243, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 8 --> <path data-score="8" class="single-green" transform="rotate(261, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 11 --> <path data-score="11" class="single-red" transform="rotate(279, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 14 --> <path data-score="14" class="single-green" transform="rotate(297, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 9 --> <path data-score="9" class="single-red" transform="rotate(315, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 12 --> <path data-score="12" class="single-green" transform="rotate(333, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <!-- Score: 5 --> <path data-score="5" class="single-red" transform="rotate(351, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                    </g>
+
+                    <!-- Double Ring Segments -->
+                    <g id="double-rings">
+                        <!-- Score: 40 --> <path data-score="40" class="double-ring green" transform="rotate(9, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 2 --> <path data-score="2" class="double-ring red" transform="rotate(27, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 36 --> <path data-score="36" class="double-ring green" transform="rotate(45, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 8 --> <path data-score="8" class="double-ring red" transform="rotate(63, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 26 --> <path data-score="26" class="double-ring green" transform="rotate(81, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 12 --> <path data-score="12" class="double-ring red" transform="rotate(99, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 20 --> <path data-score="20" class="double-ring green" transform="rotate(117, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 30 --> <path data-score="30" class="double-ring red" transform="rotate(135, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 4 --> <path data-score="4" class="double-ring green" transform="rotate(153, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 34 --> <path data-score="34" class="double-ring red" transform="rotate(171, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 6 --> <path data-score="6" class="double-ring green" transform="rotate(189, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 38 --> <path data-score="38" class="double-ring red" transform="rotate(207, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 14 --> <path data-score="14" class="double-ring green" transform="rotate(225, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 32 --> <path data-score="32" class="double-ring red" transform="rotate(243, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 16 --> <path data-score="16" class="double-ring green" transform="rotate(261, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 22 --> <path data-score="22" class="double-ring red" transform="rotate(279, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 28 --> <path data-score="28" class="double-ring green" transform="rotate(297, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 18 --> <path data-score="18" class="double-ring red" transform="rotate(315, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 24 --> <path data-score="24" class="double-ring green" transform="rotate(333, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <!-- Score: 10 --> <path data-score="10" class="double-ring red" transform="rotate(351, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                    </g>
+                    
+                    <!-- Single Outer Segments -->
+                    <g id="single-outer-segments">
+                        <!-- Score: 20 --> <path data-score="20" class="single-green" transform="rotate(9, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 1 --> <path data-score="1" class="single-red" transform="rotate(27, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 18 --> <path data-score="18" class="single-green" transform="rotate(45, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 4 --> <path data-score="4" class="single-red" transform="rotate(63, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 13 --> <path data-score="13" class="single-green" transform="rotate(81, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 6 --> <path data-score="6" class="single-red" transform="rotate(99, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 10 --> <path data-score="10" class="single-green" transform="rotate(117, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 15 --> <path data-score="15" class="single-red" transform="rotate(135, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 2 --> <path data-score="2" class="single-green" transform="rotate(153, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 17 --> <path data-score="17" class="single-red" transform="rotate(171, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 3 --> <path data-score="3" class="single-green" transform="rotate(189, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 19 --> <path data-score="19" class="single-red" transform="rotate(207, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 7 --> <path data-score="7" class="single-green" transform="rotate(225, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 16 --> <path data-score="16" class="single-red" transform="rotate(243, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 8 --> <path data-score="8" class="single-green" transform="rotate(261, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 11 --> <path data-score="11" class="single-red" transform="rotate(279, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 14 --> <path data-score="14" class="single-green" transform="rotate(297, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 9 --> <path data-score="9" class="single-red" transform="rotate(315, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 12 --> <path data-score="12" class="single-green" transform="rotate(333, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <!-- Score: 5 --> <path data-score="5" class="single-red" transform="rotate(351, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                    </g>
+                    
+                    <!-- Triple Rings -->
+                    <g id="triple-rings">
+                        <!-- Score: 60 --> <path data-score="60" class="triple-ring red" transform="rotate(9, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 3 --> <path data-score="3" class="triple-ring green" transform="rotate(27, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 54 --> <path data-score="54" class="triple-ring red" transform="rotate(45, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 12 --> <path data-score="12" class="triple-ring green" transform="rotate(63, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 39 --> <path data-score="39" class="triple-ring red" transform="rotate(81, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 18 --> <path data-score="18" class="triple-ring green" transform="rotate(99, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 30 --> <path data-score="30" class="triple-ring red" transform="rotate(117, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 45 --> <path data-score="45" class="triple-ring green" transform="rotate(135, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 6 --> <path data-score="6" class="triple-ring red" transform="rotate(153, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 57 --> <path data-score="57" class="triple-ring green" transform="rotate(171, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 9 --> <path data-score="9" class="triple-ring red" transform="rotate(189, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 42 --> <path data-score="42" class="triple-ring green" transform="rotate(207, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 33 --> <path data-score="33" class="triple-ring red" transform="rotate(225, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 24 --> <path data-score="24" class="triple-ring green" transform="rotate(243, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 15 --> <path data-score="15" class="triple-ring red" transform="rotate(261, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 10 --> <path data-score="10" class="triple-ring green" transform="rotate(279, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 35 --> <path data-score="35" class="triple-ring red" transform="rotate(297, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 27 --> <path data-score="27" class="triple-ring green" transform="rotate(315, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 36 --> <path data-score="36" class="triple-ring red" transform="rotate(333, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <!-- Score: 20 --> <path data-score="20" class="triple-ring green" transform="rotate(351, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                    </g>
+
+                    <!-- Inner Single Segments -->
+                    <g id="single-inner-segments">
+                        <!-- Score: 20 --> <path data-score="20" class="single-green" transform="rotate(9, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 1 --> <path data-score="1" class="single-red" transform="rotate(27, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 18 --> <path data-score="18" class="single-green" transform="rotate(45, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 4 --> <path data-score="4" class="single-red" transform="rotate(63, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 13 --> <path data-score="13" class="single-green" transform="rotate(81, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 6 --> <path data-score="6" class="single-red" transform="rotate(99, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 10 --> <path data-score="10" class="single-green" transform="rotate(117, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 15 --> <path data-score="15" class="single-red" transform="rotate(135, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 2 --> <path data-score="2" class="single-green" transform="rotate(153, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 17 --> <path data-score="17" class="single-red" transform="rotate(171, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 3 --> <path data-score="3" class="single-green" transform="rotate(189, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 19 --> <path data-score="19" class="single-red" transform="rotate(207, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 7 --> <path data-score="7" class="single-green" transform="rotate(225, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 16 --> <path data-score="16" class="single-red" transform="rotate(243, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 8 --> <path data-score="8" class="single-green" transform="rotate(261, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 11 --> <path data-score="11" class="single-red" transform="rotate(279, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 14 --> <path data-score="14" class="single-green" transform="rotate(297, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 9 --> <path data-score="9" class="single-red" transform="rotate(315, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 12 --> <path data-score="12" class="single-green" transform="rotate(333, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <!-- Score: 5 --> <path data-score="5" class="single-red" transform="rotate(351, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                    </g>
+
+                    <!-- Bullseyes -->
+                    <circle data-score="25" class="outer-bull" cx="200" cy="200" r="10"></circle>
+                    <circle data-score="50" class="bullseye" cx="200" cy="200" r="5"></circle>
+
+                </svg>
+            </div>
+        </div>
+
+        <div class="h-px w-full bg-gray-700 my-8"></div>
+
+        <!-- Shop Section -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4 text-center">Shop <span class="text-yellow-400">(Cost: 100 per item)</span></h2>
+            <div id="shop-items" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <!-- Shop items will be rendered here -->
+            </div>
+        </div>
+
+        <div class="h-px w-full bg-gray-700 my-8"></div>
+
+        <!-- Bank Section -->
+        <div class="mb-4">
+            <h2 class="text-xl font-bold mb-4 text-center">Your Bank <span class="text-blue-400">(Click to use)</span></h2>
+            <div id="bank-items" class="flex flex-wrap gap-2 justify-center">
+                <!-- Bank items will be rendered here -->
+                <p id="bank-placeholder" class="text-gray-500">Your bank is empty. Purchase some items!</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Message Box -->
+    <div id="message-box" class="message-box p-6 rounded-lg text-center">
+        <div id="message-text" class="mb-4"></div>
+        <button id="close-message" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full">OK</button>
+    </div>
+
+    <script>
+        // DOM element references
+        const totalScoreEl = document.getElementById('total-score');
+        const dartboardEl = document.getElementById('dartboard');
+        const shopItemsEl = document.getElementById('shop-items');
+        const bankItemsEl = document.getElementById('bank-items');
+        const bankPlaceholderEl = document.getElementById('bank-placeholder');
+        const messageBox = document.getElementById('message-box');
+        const messageText = document.getElementById('message-text');
+        const closeMessageBtn = document.getElementById('close-message');
+
+        // Global state variables
+        let totalScore = 0;
+        let bank = {}; // Object to store purchased items and their counts
+
+        // Items available in the shop
+        const shopItems = [
+            { id: 'place-dart', name: 'Place Dart' },
+            { id: 'ad-break', name: 'Ad Break' },
+            { id: 'throw-three', name: 'Throw 3 darts per round' },
+            { id: 'touch-shelf', name: 'Touch the shelf' },
+            { id: 'stand-oche', name: 'Stand on the oche' },
+        ];
+
+        // Function to show a message to the user
+        function showMessage(text) {
+            messageText.textContent = text;
+            messageBox.style.display = 'block';
+        }
+
+        // Function to hide the message box
+        function hideMessage() {
+            messageBox.style.display = 'none';
+        }
+
+        // Function to update the total score display
+        function updateScoreDisplay() {
+            totalScoreEl.textContent = totalScore;
+        }
+
+        // Function to render the bank items
+        function renderBank() {
+            bankItemsEl.innerHTML = '';
+            const itemsInBank = Object.keys(bank).filter(key => bank[key] > 0);
+
+            if (itemsInBank.length === 0) {
+                bankPlaceholderEl.style.display = 'block';
+            } else {
+                bankPlaceholderEl.style.display = 'none';
+                itemsInBank.forEach(itemId => {
+                    const item = shopItems.find(i => i.id === itemId);
+                    const itemEl = document.createElement('div');
+                    itemEl.id = `bank-item-${itemId}`;
+                    itemEl.className = 'bank-item bg-gray-700 hover:bg-gray-600 rounded-xl p-3 text-center transition';
+                    itemEl.innerHTML = `
+                        <div class="font-bold">${item.name}</div>
+                        <div class="text-sm text-gray-400">x${bank[itemId]}</div>
+                    `;
+                    itemEl.addEventListener('click', () => {
+                        useBankItem(itemId);
+                    });
+                    bankItemsEl.appendChild(itemEl);
+                });
+            }
+        }
+
+        // Function to handle using a bank item
+        function useBankItem(itemId) {
+            if (bank[itemId] > 0) {
+                bank[itemId]--;
+                showMessage(`You used one "${shopItems.find(i => i.id === itemId).name}".`);
+                renderBank();
+            }
+        }
+
+        // Function to handle a purchase
+        function handlePurchase(itemId) {
+            const cost = 100;
+            if (totalScore >= cost) {
+                totalScore -= cost;
+                bank[itemId] = (bank[itemId] || 0) + 1;
+                updateScoreDisplay();
+                renderBank();
+                showMessage(`You purchased "${shopItems.find(i => i.id === itemId).name}" for 100 score points!`);
+            } else {
+                showMessage('Not enough score to purchase this item!');
+            }
+        }
+
+        // Event listener for dartboard clicks
+        dartboardEl.addEventListener('click', (event) => {
+            const path = event.target.closest('path, circle');
+            if (path) {
+                const score = parseInt(path.getAttribute('data-score'), 10);
+                if (!isNaN(score)) {
+                    totalScore += score;
+                    updateScoreDisplay();
+                }
+            }
+        });
+
+        // Event listener for closing the message box
+        closeMessageBtn.addEventListener('click', hideMessage);
+
+        // Render the shop items
+        function renderShopItems() {
+            shopItems.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.id = `shop-item-${item.id}`;
+                itemEl.className = 'shop-item-card bg-gray-800 rounded-xl p-4 flex flex-col items-center justify-center border border-gray-700 shadow-md';
+                itemEl.innerHTML = `
+                    <div class="text-center font-bold mb-1">${item.name}</div>
+                    <div class="text-xs text-gray-400">Cost: 100</div>
+                `;
+                itemEl.addEventListener('click', () => {
+                    handlePurchase(item.id);
+                });
+                shopItemsEl.appendChild(itemEl);
+            });
+        }
+
+        // Initial setup
+        document.addEventListener('DOMContentLoaded', () => {
+            updateScoreDisplay();
+            renderShopItems();
+            renderBank();
+        });
+    </script>
+</body>
+</html>
