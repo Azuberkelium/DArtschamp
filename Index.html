@@ -56,6 +56,14 @@
         .outer-bull { fill: #006400; }
         .bullseye { fill: #a52a2a; }
 
+        .number-text {
+            fill: #c9d1d9;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+
         .message-box {
             position: fixed;
             top: 50%;
@@ -80,144 +88,153 @@
                 Score: <span id="total-score" class="text-green-400">0</span>
             </div>
 
-            <!-- Dartboard SVG - Updated for no overlap -->
+            <!-- Dartboard SVG with Numbers -->
             <div class="dartboard-wrapper">
                 <svg id="dartboard" class="dartboard" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Numbers will not be drawn for simplicity, just the clickable paths -->
-                    <defs>
-                        <!-- Define the paths for a single segment (e.g., the 20) to reuse with transforms -->
-                        <path id="single-outer" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <path id="double-ring-path" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <path id="single-inner" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <path id="triple-ring-path" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <path id="single-triple-in" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                    </defs>
-
-                    <!-- Segments, dynamically colored and rotated -->
+                    <!-- Dartboard segments from previous version (no changes here) -->
                     <!-- Outer Single Segments -->
                     <g id="outer-segments">
-                        <!-- Score: 20 --> <path data-score="20" class="single-green" transform="rotate(9, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 1 --> <path data-score="1" class="single-red" transform="rotate(27, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 18 --> <path data-score="18" class="single-green" transform="rotate(45, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 4 --> <path data-score="4" class="single-red" transform="rotate(63, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 13 --> <path data-score="13" class="single-green" transform="rotate(81, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 6 --> <path data-score="6" class="single-red" transform="rotate(99, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 10 --> <path data-score="10" class="single-green" transform="rotate(117, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 15 --> <path data-score="15" class="single-red" transform="rotate(135, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 2 --> <path data-score="2" class="single-green" transform="rotate(153, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 17 --> <path data-score="17" class="single-red" transform="rotate(171, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 3 --> <path data-score="3" class="single-green" transform="rotate(189, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 19 --> <path data-score="19" class="single-red" transform="rotate(207, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 7 --> <path data-score="7" class="single-green" transform="rotate(225, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 16 --> <path data-score="16" class="single-red" transform="rotate(243, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 8 --> <path data-score="8" class="single-green" transform="rotate(261, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 11 --> <path data-score="11" class="single-red" transform="rotate(279, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 14 --> <path data-score="14" class="single-green" transform="rotate(297, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 9 --> <path data-score="9" class="single-red" transform="rotate(315, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 12 --> <path data-score="12" class="single-green" transform="rotate(333, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
-                        <!-- Score: 5 --> <path data-score="5" class="single-red" transform="rotate(351, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="20" class="single-green" transform="rotate(-9, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="1" class="single-red" transform="rotate(9, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="18" class="single-green" transform="rotate(27, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="13" class="single-green" transform="rotate(63, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="6" class="single-red" transform="rotate(81, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="10" class="single-green" transform="rotate(99, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="15" class="single-red" transform="rotate(117, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="2" class="single-green" transform="rotate(135, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="17" class="single-red" transform="rotate(153, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="3" class="single-green" transform="rotate(171, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="19" class="single-red" transform="rotate(189, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="7" class="single-green" transform="rotate(207, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="16" class="single-red" transform="rotate(225, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="8" class="single-green" transform="rotate(243, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="11" class="single-red" transform="rotate(261, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="9" class="single-red" transform="rotate(297, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="12" class="single-green" transform="rotate(315, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
+                        <path data-score="5" class="single-red" transform="rotate(333, 200, 200)" d="M200,200 L200,32 A168 168 0 0 1 216.7,32.2 L216.7,112.2 A88 88 0 0 0 200,112 L200,32 Z"></path>
                     </g>
-
                     <!-- Double Ring Segments -->
                     <g id="double-rings">
-                        <!-- Score: 40 --> <path data-score="40" class="double-ring green" transform="rotate(9, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 2 --> <path data-score="2" class="double-ring red" transform="rotate(27, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 36 --> <path data-score="36" class="double-ring green" transform="rotate(45, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 8 --> <path data-score="8" class="double-ring red" transform="rotate(63, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 26 --> <path data-score="26" class="double-ring green" transform="rotate(81, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 12 --> <path data-score="12" class="double-ring red" transform="rotate(99, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 20 --> <path data-score="20" class="double-ring green" transform="rotate(117, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 30 --> <path data-score="30" class="double-ring red" transform="rotate(135, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 4 --> <path data-score="4" class="double-ring green" transform="rotate(153, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 34 --> <path data-score="34" class="double-ring red" transform="rotate(171, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 6 --> <path data-score="6" class="double-ring green" transform="rotate(189, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 38 --> <path data-score="38" class="double-ring red" transform="rotate(207, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 14 --> <path data-score="14" class="double-ring green" transform="rotate(225, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 32 --> <path data-score="32" class="double-ring red" transform="rotate(243, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 16 --> <path data-score="16" class="double-ring green" transform="rotate(261, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 22 --> <path data-score="22" class="double-ring red" transform="rotate(279, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 28 --> <path data-score="28" class="double-ring green" transform="rotate(297, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 18 --> <path data-score="18" class="double-ring red" transform="rotate(315, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 24 --> <path data-score="24" class="double-ring green" transform="rotate(333, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
-                        <!-- Score: 10 --> <path data-score="10" class="double-ring red" transform="rotate(351, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="40" class="double-ring green" transform="rotate(-9, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="2" class="double-ring red" transform="rotate(9, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="36" class="double-ring green" transform="rotate(27, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="8" class="double-ring red" transform="rotate(45, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="26" class="double-ring green" transform="rotate(63, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="12" class="double-ring red" transform="rotate(81, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="20" class="double-ring green" transform="rotate(99, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="30" class="double-ring red" transform="rotate(117, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="4" class="double-ring green" transform="rotate(135, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="34" class="double-ring red" transform="rotate(153, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="6" class="double-ring green" transform="rotate(171, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="38" class="double-ring red" transform="rotate(189, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="14" class="double-ring green" transform="rotate(207, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="32" class="double-ring red" transform="rotate(225, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="16" class="double-ring green" transform="rotate(243, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="22" class="double-ring red" transform="rotate(261, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="28" class="double-ring green" transform="rotate(279, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="18" class="double-ring red" transform="rotate(297, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="24" class="double-ring green" transform="rotate(315, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
+                        <path data-score="10" class="double-ring red" transform="rotate(333, 200, 200)" d="M200,200 L200,28 A172 172 0 0 1 217.1,28.2 L217.1,48.2 A152 152 0 0 0 200,48 L200,28 Z"></path>
                     </g>
-                    
                     <!-- Single Outer Segments -->
                     <g id="single-outer-segments">
-                        <!-- Score: 20 --> <path data-score="20" class="single-green" transform="rotate(9, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 1 --> <path data-score="1" class="single-red" transform="rotate(27, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 18 --> <path data-score="18" class="single-green" transform="rotate(45, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 4 --> <path data-score="4" class="single-red" transform="rotate(63, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 13 --> <path data-score="13" class="single-green" transform="rotate(81, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 6 --> <path data-score="6" class="single-red" transform="rotate(99, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 10 --> <path data-score="10" class="single-green" transform="rotate(117, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 15 --> <path data-score="15" class="single-red" transform="rotate(135, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 2 --> <path data-score="2" class="single-green" transform="rotate(153, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 17 --> <path data-score="17" class="single-red" transform="rotate(171, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 3 --> <path data-score="3" class="single-green" transform="rotate(189, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 19 --> <path data-score="19" class="single-red" transform="rotate(207, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 7 --> <path data-score="7" class="single-green" transform="rotate(225, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 16 --> <path data-score="16" class="single-red" transform="rotate(243, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 8 --> <path data-score="8" class="single-green" transform="rotate(261, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 11 --> <path data-score="11" class="single-red" transform="rotate(279, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 14 --> <path data-score="14" class="single-green" transform="rotate(297, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 9 --> <path data-score="9" class="single-red" transform="rotate(315, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 12 --> <path data-score="12" class="single-green" transform="rotate(333, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
-                        <!-- Score: 5 --> <path data-score="5" class="single-red" transform="rotate(351, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="20" class="single-green" transform="rotate(-9, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="1" class="single-red" transform="rotate(9, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="18" class="single-green" transform="rotate(27, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="13" class="single-green" transform="rotate(63, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="6" class="single-red" transform="rotate(81, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="10" class="single-green" transform="rotate(99, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="15" class="single-red" transform="rotate(117, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="2" class="single-green" transform="rotate(135, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="17" class="single-red" transform="rotate(153, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="3" class="single-green" transform="rotate(171, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="19" class="single-red" transform="rotate(189, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="7" class="single-green" transform="rotate(207, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="16" class="single-red" transform="rotate(225, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="8" class="single-green" transform="rotate(243, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="11" class="single-red" transform="rotate(261, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="9" class="single-red" transform="rotate(297, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="12" class="single-green" transform="rotate(315, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
+                        <path data-score="5" class="single-red" transform="rotate(333, 200, 200)" d="M200,200 L200,48 A152 152 0 0 1 216.9,48.2 L216.9,100.2 A100 100 0 0 0 200,100 L200,48 Z"></path>
                     </g>
-                    
                     <!-- Triple Rings -->
                     <g id="triple-rings">
-                        <!-- Score: 60 --> <path data-score="60" class="triple-ring red" transform="rotate(9, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 3 --> <path data-score="3" class="triple-ring green" transform="rotate(27, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 54 --> <path data-score="54" class="triple-ring red" transform="rotate(45, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 12 --> <path data-score="12" class="triple-ring green" transform="rotate(63, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 39 --> <path data-score="39" class="triple-ring red" transform="rotate(81, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 18 --> <path data-score="18" class="triple-ring green" transform="rotate(99, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 30 --> <path data-score="30" class="triple-ring red" transform="rotate(117, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 45 --> <path data-score="45" class="triple-ring green" transform="rotate(135, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 6 --> <path data-score="6" class="triple-ring red" transform="rotate(153, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 57 --> <path data-score="57" class="triple-ring green" transform="rotate(171, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 9 --> <path data-score="9" class="triple-ring red" transform="rotate(189, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 42 --> <path data-score="42" class="triple-ring green" transform="rotate(207, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 33 --> <path data-score="33" class="triple-ring red" transform="rotate(225, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 24 --> <path data-score="24" class="triple-ring green" transform="rotate(243, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 15 --> <path data-score="15" class="triple-ring red" transform="rotate(261, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 10 --> <path data-score="10" class="triple-ring green" transform="rotate(279, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 35 --> <path data-score="35" class="triple-ring red" transform="rotate(297, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 27 --> <path data-score="27" class="triple-ring green" transform="rotate(315, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 36 --> <path data-score="36" class="triple-ring red" transform="rotate(333, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
-                        <!-- Score: 20 --> <path data-score="20" class="triple-ring green" transform="rotate(351, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="60" class="triple-ring red" transform="rotate(-9, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="3" class="triple-ring green" transform="rotate(9, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="54" class="triple-ring red" transform="rotate(27, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="12" class="triple-ring green" transform="rotate(45, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="39" class="triple-ring red" transform="rotate(63, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="18" class="triple-ring green" transform="rotate(81, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="30" class="triple-ring red" transform="rotate(99, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="45" class="triple-ring green" transform="rotate(117, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="6" class="triple-ring red" transform="rotate(135, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="57" class="triple-ring green" transform="rotate(153, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="9" class="triple-ring red" transform="rotate(171, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="42" class="triple-ring green" transform="rotate(189, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="33" class="triple-ring red" transform="rotate(207, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="24" class="triple-ring green" transform="rotate(225, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="15" class="triple-ring red" transform="rotate(243, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="10" class="triple-ring green" transform="rotate(261, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="35" class="triple-ring red" transform="rotate(279, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="27" class="triple-ring green" transform="rotate(297, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="36" class="triple-ring red" transform="rotate(315, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
+                        <path data-score="20" class="triple-ring green" transform="rotate(333, 200, 200)" d="M200,200 L200,100 A100 100 0 0 1 216.9,100.2 L216.9,120.2 A80 80 0 0 0 200,120 L200,100 Z"></path>
                     </g>
-
                     <!-- Inner Single Segments -->
                     <g id="single-inner-segments">
-                        <!-- Score: 20 --> <path data-score="20" class="single-green" transform="rotate(9, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 1 --> <path data-score="1" class="single-red" transform="rotate(27, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 18 --> <path data-score="18" class="single-green" transform="rotate(45, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 4 --> <path data-score="4" class="single-red" transform="rotate(63, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 13 --> <path data-score="13" class="single-green" transform="rotate(81, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 6 --> <path data-score="6" class="single-red" transform="rotate(99, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 10 --> <path data-score="10" class="single-green" transform="rotate(117, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 15 --> <path data-score="15" class="single-red" transform="rotate(135, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 2 --> <path data-score="2" class="single-green" transform="rotate(153, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 17 --> <path data-score="17" class="single-red" transform="rotate(171, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 3 --> <path data-score="3" class="single-green" transform="rotate(189, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 19 --> <path data-score="19" class="single-red" transform="rotate(207, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 7 --> <path data-score="7" class="single-green" transform="rotate(225, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 16 --> <path data-score="16" class="single-red" transform="rotate(243, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 8 --> <path data-score="8" class="single-green" transform="rotate(261, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 11 --> <path data-score="11" class="single-red" transform="rotate(279, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 14 --> <path data-score="14" class="single-green" transform="rotate(297, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 9 --> <path data-score="9" class="single-red" transform="rotate(315, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 12 --> <path data-score="12" class="single-green" transform="rotate(333, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
-                        <!-- Score: 5 --> <path data-score="5" class="single-red" transform="rotate(351, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="20" class="single-green" transform="rotate(-9, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="1" class="single-red" transform="rotate(9, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="18" class="single-green" transform="rotate(27, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="4" class="single-red" transform="rotate(45, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="13" class="single-green" transform="rotate(63, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="6" class="single-red" transform="rotate(81, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="10" class="single-green" transform="rotate(99, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="15" class="single-red" transform="rotate(117, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="2" class="single-green" transform="rotate(135, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="17" class="single-red" transform="rotate(153, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="3" class="single-green" transform="rotate(171, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="19" class="single-red" transform="rotate(189, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="7" class="single-green" transform="rotate(207, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="16" class="single-red" transform="rotate(225, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="8" class="single-green" transform="rotate(243, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="11" class="single-red" transform="rotate(261, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="14" class="single-green" transform="rotate(279, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="9" class="single-red" transform="rotate(297, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="12" class="single-green" transform="rotate(315, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
+                        <path data-score="5" class="single-red" transform="rotate(333, 200, 200)" d="M200,200 L200,120 A80 80 0 0 1 216.8,120.2 L216.8,190.2 A10 10 0 0 0 200,190 L200,120 Z"></path>
                     </g>
-
                     <!-- Bullseyes -->
                     <circle data-score="25" class="outer-bull" cx="200" cy="200" r="10"></circle>
                     <circle data-score="50" class="bullseye" cx="200" cy="200" r="5"></circle>
 
+                    <!-- The new numbers section with corrected rotations -->
+                    <g id="number-ring">
+                        <!-- Numbers are positioned based on radius and angle -->
+                        <text x="200" y="25" class="number-text" transform="rotate(-9, 200, 200)">20</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(9, 200, 200)">1</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(27, 200, 200)">18</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(45, 200, 200)">4</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(63, 200, 200)">13</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(81, 200, 200)">6</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(99, 200, 200)">10</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(117, 200, 200)">15</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(135, 200, 200)">2</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(153, 200, 200)">17</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(171, 200, 200)">3</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(189, 200, 200)">19</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(207, 200, 200)">7</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(225, 200, 200)">16</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(243, 200, 200)">8</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(261, 200, 200)">11</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(279, 200, 200)">14</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(297, 200, 200)">9</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(315, 200, 200)">12</text>
+                        <text x="200" y="25" class="number-text" transform="rotate(333, 200, 200)">5</text>
+                    </g>
                 </svg>
             </div>
         </div>
